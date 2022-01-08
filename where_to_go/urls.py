@@ -18,8 +18,10 @@ from django.conf import settings
 from django.urls import path
 from django.conf.urls.static import static
 from .views import index_page
+from .views import places
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', index_page),
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    path('places/<int:post_id>/', places)
+              ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
