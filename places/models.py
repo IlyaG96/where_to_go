@@ -1,6 +1,6 @@
 from django.db import models
 # Create your models here.
-
+from where_to_go import settings
 
 class Post(models.Model):
     title = models.CharField(max_length=256)
@@ -29,5 +29,6 @@ class Image(models.Model):
         verbose_name_plural = 'изображения'
 
     def __str__(self):
-        return f'{self.position} {self.post.title}'
+        return f"{self.position}, {self.post.title}"
+
 
