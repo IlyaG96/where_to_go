@@ -7,6 +7,7 @@ class Post(models.Model):
     description_short = models.TextField()
     description_long = models.TextField()
     coordinates = models.JSONField()
+    details_url = models.CharField(max_length=200, default="None")
 
     class Meta:
         ordering = ['title']
