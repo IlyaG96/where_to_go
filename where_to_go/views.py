@@ -1,11 +1,5 @@
 from django.shortcuts import render
 from places.models import Post, Image
-from django.http import HttpResponse
-from django.template import loader
-from django.utils.safestring import SafeString
-from django.http import JsonResponse
-from django.forms.models import model_to_dict
-from json import dumps
 
 
 def serialize_post(post):
