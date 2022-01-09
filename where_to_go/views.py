@@ -8,11 +8,13 @@ import json
 def serialize_post(post):
     return {
         "type": "Feature",
-        "geometry": {"type": "Point", "coordinates": list(post.coordinates.values())},
+        "geometry": {"type": "Point",
+                     "coordinates": [post.longitude, post.latitude]
+                     },
         "properties": {
             "title": post.title,
             "placeId": post.id,
-            "detailsUrl": post.details_url
+            "detailsUrl": f"places/{post.id}"
         }
     }
 
@@ -27,12 +29,13 @@ def index_page(request):
     return render(request, 'index.html', context)
 
 
-def places(post_id):
+def places(request, post_id):
     current_post = get_object_or_404(Post.objects.filter(id=post_id))
     title = current_post.title
     description_short = current_post.description_short
     description_long = current_post.description_long
-    coordinates = current_post.coordinates
+    longitude = current_post.longitude
+    latitude = current_post.latitude
     images = Image.objects.filter(post=current_post)
     imgs = [image.image.url for image in images]
     response_data = {
@@ -40,7 +43,10 @@ def places(post_id):
         "imgs": imgs,
         "description_short": description_short,
         "description_long": description_long,
-        "coordinates": coordinates
+        "coordinates": {
+            "lon": longitude,
+            "lat": latitude
+        }
     }
 
     return HttpResponse(json.dumps(response_data, ensure_ascii=True, indent=2),

@@ -2,12 +2,13 @@ from django.db import models
 # Create your models here.
 from where_to_go import settings
 
+
 class Post(models.Model):
     title = models.CharField(max_length=256)
     description_short = models.TextField()
     description_long = models.TextField()
-    coordinates = models.JSONField()
-    details_url = models.CharField(max_length=200, default="None")
+    longitude = models.FloatField(verbose_name="Широта")
+    latitude = models.FloatField(verbose_name="Долгота")
 
     class Meta:
         ordering = ['title']
