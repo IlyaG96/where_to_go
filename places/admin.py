@@ -3,9 +3,10 @@ from .models import Post
 from .models import Image
 # Register your models here.
 from django.utils.html import format_html
+from adminsortable2.admin import SortableAdminMixin, SortableInlineAdminMixin
 
 
-class PostImageAdmin(admin.TabularInline):
+class PostImageAdmin(SortableInlineAdminMixin, admin.TabularInline):
 
     model = Image
     readonly_fields = "image_preview",
@@ -15,7 +16,7 @@ class PostImageAdmin(admin.TabularInline):
 
 
 @admin.register(Post)
-class AuthorAdmin(admin.ModelAdmin):
+class AuthorAdmin(SortableAdminMixin, admin.ModelAdmin):
 
     inlines = [
         PostImageAdmin
@@ -28,4 +29,3 @@ class AuthorAdmin(admin.ModelAdmin):
 @admin.register(Image)
 class PostImageAdmin(admin.ModelAdmin):
     pass
-

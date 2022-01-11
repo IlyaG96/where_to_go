@@ -1,6 +1,5 @@
 from django.db import models
 # Create your models here.
-from where_to_go import settings
 
 
 class Post(models.Model):
@@ -13,8 +12,13 @@ class Post(models.Model):
     longitude = models.FloatField(verbose_name="Широта")
     latitude = models.FloatField(verbose_name="Долгота")
 
+    position = models.PositiveIntegerField(default=0,
+                                           blank=False,
+                                           null=False,
+                                           verbose_name="Номер поста")
+
     class Meta:
-        ordering = ['title']
+        ordering = ['position']
         verbose_name = 'Место'
         verbose_name_plural = 'Все места'
 
@@ -23,12 +27,15 @@ class Post(models.Model):
 
 
 class Image(models.Model):
-    post = models.ForeignKey(Post, default=None,
+    post = models.ForeignKey(Post,
+                             default=None,
                              on_delete=models.CASCADE,
                              related_name="image")
     image = models.ImageField(upload_to='media/',
                               verbose_name="Картинка")
     position = models.PositiveIntegerField(default=0,
+                                           blank=False,
+                                           null=False,
                                            verbose_name="Порядковый номер картинки")
 
     class Meta:
@@ -38,5 +45,4 @@ class Image(models.Model):
 
     def __str__(self):
         return f"{self.position}, {self.post.title}"
-
 
