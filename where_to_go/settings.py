@@ -17,6 +17,8 @@ from environs import Env
 BASE_DIR = Path(__file__).resolve().parent.parent
 env = Env()
 
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "where_to_go.settings")
+
 ALLOWED_HOSTS = env.list('ALLOWED_HOSTS', [])
 SECRET_KEY = env.str('SECRET_KEY', 'REPLACE_ME')
 DEBUG = env.bool('DEBUG', True)
@@ -87,7 +89,7 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
-
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "where_to_go.settings")
 
 LANGUAGE_CODE = 'en-us'
 

@@ -36,7 +36,7 @@ class Image(models.Model):
         default=None,
         null=True,
         on_delete=models.SET_NULL,
-        related_name="image")
+        related_name="images")
     image = models.ImageField(
         upload_to=get_file_path,
         verbose_name="Картинка")
