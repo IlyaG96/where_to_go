@@ -99,7 +99,7 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, "static")
+    os.path.join(BASE_DIR, 'static')
 ]
 MEDIA_URL = 'media/'
 MEDIA_DIRS = [
@@ -109,14 +109,14 @@ MEDIA_DIRS = [
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 TINYMCE_DEFAULT_CONFIG = {
-    "theme": "silver",
-    "height": 300,
-    "menubar": True,
-    "plugins": "advlist,autolink,lists,link,image,charmap,print,preview,anchor,"
-               "searchreplace,visualblocks,code,fullscreen,insertdatetime,media,table,paste,"
-               "code,help,wordcount",
-    "toolbar": "undo redo | formatselect | "
-               "bold italic backcolor | alignleft aligncenter "
-               "alignright alignjustify | bullist numlist outdent indent | "
-               "removeformat | help",
+    'theme': 'silver',
+    'height': 300,
+    'menubar': True,
+    'plugins': 'advlist,autolink,lists,link,image,charmap,print,preview,anchor,'
+               'searchreplace,visualblocks,code,fullscreen,insertdatetime,media,table,paste,'
+               'code,help,wordcount',
+    'toolbar': 'undo redo | formatselect | '
+               'bold italic backcolor | alignleft aligncenter '
+               'alignright alignjustify | bullist numlist outdent indent | '
+               'removeformat | help',
 }

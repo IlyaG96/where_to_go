@@ -2,6 +2,10 @@ from django.db import models
 from tinymce.models import HTMLField
 
 
+def get_file_path(instance, filename):
+    return f"media/{instance.post.title}/{filename}"
+
+
 class Post(models.Model):
     title = models.CharField(
         max_length=256,
@@ -30,10 +34,11 @@ class Image(models.Model):
     post = models.ForeignKey(
         Post,
         default=None,
-        on_delete=models.CASCADE,
+        null=True,
+        on_delete=models.SET_NULL,
         related_name="image")
     image = models.ImageField(
-        upload_to="media/",
+        upload_to=get_file_path,
         verbose_name="Картинка")
     position = models.PositiveIntegerField(
         default=0,
