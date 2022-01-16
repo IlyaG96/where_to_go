@@ -19,9 +19,11 @@ from django.urls import path
 from django.conf.urls.static import static
 from places.views import index_page
 from places.views import places
+from django.urls import include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', index_page),
-    path('places/<int:post_id>/', places)
+    path('places/<int:post_id>/', places),
+    path('tinymce/', include('tinymce.urls'))
               ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

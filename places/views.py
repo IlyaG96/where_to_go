@@ -20,7 +20,7 @@ def serialize_post(post):
 
 
 def index_page(request):
-    all_posts = Post.objects.all()
+    all_posts = Post.objects.all().only("longitude", "latitude", "title", "id")
     content = {
         "type": "FeatureCollection",
         "features": [serialize_post(post) for post in all_posts]
