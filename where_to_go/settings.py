@@ -9,6 +9,7 @@ https://docs.djangoproject.com/en/4.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.0/ref/settings/
 """
+import django
 
 from pathlib import Path
 import os
@@ -120,3 +121,6 @@ TINYMCE_DEFAULT_CONFIG = {
                'alignright alignjustify | bullist numlist outdent indent | '
                'removeformat | help',
 }
+
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "where_to_go.settings")
+django.setup()
