@@ -1,3 +1,5 @@
+import json
+
 import django
 import os
 import requests
@@ -8,13 +10,19 @@ from urllib.parse import urlparse, unquote
 from django.core.management.base import BaseCommand
 
 
-def get_json():
-    url = "https://raw.githubusercontent.com/devmanorg/where-to-go-places/master/places/Лагерь%20«Подмосковный».json"
+def get_json(url):
     response = requests.get(url)
     response.raise_for_status()
     description = response.json()
 
     return description
+
+
+def open_json(path):
+    with open(file=path, mode="r") as file:
+        description = json.load(file)
+        return description
+
 
 
 def get_filename_from_photo_link(image):
@@ -74,23 +82,44 @@ def write_data_to_db(description):
 
 
 def main():
-  #  parser = argparse.ArgumentParser(
-  #      description="Позволяет загружать JSON либо с сервера, либо из локальной директории"
-  #  )
-  #  parser.add_argument("json_path",
-  #                      help="Путь к json файлу",
-  #                      type=int,
-  #                      default=1,
-  #                      nargs="?")
-  #  args = parser.parse_args()
+    parser = argparse.ArgumentParser(
+        description="Позволяет загружать JSON либо с сервера, либо из локальной директории"
+    )
+    parser.add_argument("-json_path",
+                        help="Путь к json файлу",
+                        nargs="?")
+    parser.add_argument("-json_folder",
+                        help="Путь к json файлу",
+                        nargs="?")
+    args = parser.parse_args()
+    if args.json_path:
+        if "http" in args.json_path:
+            description = get_json(args.json_path)
+        else:
+            description = open_json(args.json_path)
 
-    get_json()
-    description = get_json()
-    write_data_to_db(description)
+        write_data_to_db(description)
+    else:
+        for jsons in args.json_folder:  # not working at all
+            description = open_json(args.json_path)
+            write_data_to_db(description)
 
 
 class Command(BaseCommand):
     help = "Add information from json file to db"
 
+    def add_arguments(self, parser):
+
+        parser.add_argument("-json_path",
+                        help="Путь к json файлу",
+                        nargs="?")
+        parser.add_argument("-json_folder",
+                        help="Путь к json файлу",
+                        nargs="?")
+
     def handle(self, *args, **options):
+        print(args)
         main()
+
+
+"Users/ilyagabdrakhmanov/PycharmProjects/where_to_go/json/Антикафе\ Bizone.json"
