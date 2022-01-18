@@ -36,7 +36,7 @@ def places(request, post_id):
     description_long = current_post.description_long
     longitude = current_post.longitude
     latitude = current_post.latitude
-    images = [image.image.url for image in current_post.image.all()]
+    images = [image.image.url for image in current_post.images.all()]
     response_data = {
         "title": title,
         "imgs": images,

@@ -10,7 +10,8 @@ class Post(models.Model):
     title = models.CharField(
         max_length=256,
         verbose_name="Заголовок",
-        default="Здесь заголовок")
+        default="Здесь заголовок",
+        unique=True)
     description_short = HTMLField(
         verbose_name="Краткое описание",
         default="Здесь краткое описание места")

@@ -28,13 +28,15 @@ def get_filename_from_photo_link(image):
 
 
 def download_image(image, title):
+
     response = requests.get(image)
     response.raise_for_status()
     filename = get_filename_from_photo_link(image)
-    path_to_file = f"../../media/{title}/{filename}"
+    path_to_file = f"./media/{title}/{filename}"
     if not Path(path_to_file).is_file():
         with open(file=path_to_file, mode="wb") as file:
             file.write(response.content)
+
 
 def write_data_to_db(description):
 
@@ -45,7 +47,7 @@ def write_data_to_db(description):
     images_links_from_json = description["imgs"]
     title = description["title"]
 
-    Path(f"../../media/{title}").mkdir(parents=True, exist_ok=True)
+    Path(f"./media/{title}").mkdir(parents=True, exist_ok=True)
 
     Post.objects.get_or_create(title=title,
                                description_long=description_long,
@@ -53,14 +55,22 @@ def write_data_to_db(description):
                                longitude=longitude,
                                latitude=latitude
                                )
+
     current_post = Post.objects.get(title=title)
     for image in images_links_from_json:
-        Image.objects.create(post=current_post,
-                             image=download_image(image, title))
-
-    imgs = [image.image.url for image in current_post.image.all()]
-
-    Post.objects.update(imgs=imgs)
+        response = requests.get(image)
+        response.raise_for_status()
+        filename = get_filename_from_photo_link(image)
+        path_to_file = f"./media/{title}/{filename}"
+        if not Path(path_to_file).is_file():
+            with open(file=path_to_file, mode="wb+") as file:
+                file.write(response.content)
+                images = Image(post=current_post)
+                images.image.save(filename, file, save=True)
+            Path(path_to_file).unlink()
+    imgs = [image.image.url for image in current_post.images.all()]
+    current_post.imgs = imgs
+    current_post.save()
 
 
 def main():
@@ -80,8 +90,7 @@ def main():
 
 
 class Command(BaseCommand):
-    help = "123"
+    help = "Add information from json file to db"
 
     def handle(self, *args, **options):
         main()
-
