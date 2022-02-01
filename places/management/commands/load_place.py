@@ -1,9 +1,7 @@
-import json
-
-import django
 import os
+import json
 import requests
-import argparse
+import traceback
 from pathlib import Path
 from places.models import Post, Image
 from urllib.parse import urlparse, unquote
@@ -24,9 +22,7 @@ def open_json(path):
         return description
 
 
-
 def get_filename_from_photo_link(image):
-
     file_name_index = 1
     path_to_file = urlparse(image).path
     file_name = unquote(path_to_file)
@@ -36,7 +32,6 @@ def get_filename_from_photo_link(image):
 
 
 def download_image(image, title):
-
     response = requests.get(image)
     response.raise_for_status()
     filename = get_filename_from_photo_link(image)
@@ -46,14 +41,14 @@ def download_image(image, title):
             file.write(response.content)
 
 
-def write_data_to_db(description):
+def write_data_to_db(place_description):
 
-    description_short = description["description_short"]
-    description_long = description["description_long"]
-    longitude = description["coordinates"]["lng"]
-    latitude = description["coordinates"]["lat"]
-    images_links_from_json = description["imgs"]
-    title = description["title"]
+    description_short = place_description["description_short"]
+    description_long = place_description["description_long"]
+    longitude = place_description["coordinates"]["lng"]
+    latitude = place_description["coordinates"]["lat"]
+    images_links_from_json = place_description["imgs"]
+    title = place_description["title"]
 
     Path(f"./media/{title}").mkdir(parents=True, exist_ok=True)
 
@@ -81,45 +76,32 @@ def write_data_to_db(description):
     current_post.save()
 
 
-def main():
-    parser = argparse.ArgumentParser(
-        description="Позволяет загружать JSON либо с сервера, либо из локальной директории"
-    )
-    parser.add_argument("-json_path",
-                        help="Путь к json файлу",
-                        nargs="?")
-    parser.add_argument("-json_folder",
-                        help="Путь к json файлу",
-                        nargs="?")
-    args = parser.parse_args()
-    if args.json_path:
-        if "http" in args.json_path:
-            description = get_json(args.json_path)
-        else:
-            description = open_json(args.json_path)
-
-        write_data_to_db(description)
-    else:
-        for jsons in args.json_folder:  # not working at all
-            description = open_json(args.json_path)
-            write_data_to_db(description)
-
-
 class Command(BaseCommand):
-    help = "Add information from json file to db"
 
     def add_arguments(self, parser):
-
-        parser.add_argument("-json_path",
-                        help="Путь к json файлу",
-                        nargs="?")
-        parser.add_argument("-json_folder",
-                        help="Путь к json файлу",
-                        nargs="?")
+        parser.add_argument('-u', '--json_url')
+        parser.add_argument('-p', '--json_path')
 
     def handle(self, *args, **options):
-        print(args)
-        main()
+        url = options['url']
+        path = options['path']
 
+        if not url and not path:
+            print('Ни путь к файлу, ни url не заданы')
 
-"Users/ilyagabdrakhmanov/PycharmProjects/where_to_go/json/Антикафе\ Bizone.json"
+        elif path:
+
+            try:
+                place_description = open_json(path)
+                write_data_to_db(place_description)
+            except FileNotFoundError:
+                traceback.print_exc()
+                print(f'\nФайл по пути {path} не найден')
+
+        elif url:
+            try:
+                place_description = get_json(url)
+                write_data_to_db(place_description)
+            except Exception as exception:
+                print(f'{exception}\n'
+                      f'Не удалось загрузить json с указанного адреса')
