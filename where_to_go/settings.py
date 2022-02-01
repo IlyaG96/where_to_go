@@ -93,7 +93,7 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "where_to_go.settings")
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'ru-ru'
 
 TIME_ZONE = 'UTC'
 
