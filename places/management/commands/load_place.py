@@ -83,8 +83,8 @@ class Command(BaseCommand):
         parser.add_argument('-p', '--json_path')
 
     def handle(self, *args, **options):
-        url = options['url']
-        path = options['path']
+        url = options['json_url']
+        path = options['json_path']
 
         if not url and not path:
             print('Ни путь к файлу, ни url не заданы')
