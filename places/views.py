@@ -2,7 +2,6 @@ from django.shortcuts import render
 from places.models import Post
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404
-import json
 
 
 def serialize_post(post):

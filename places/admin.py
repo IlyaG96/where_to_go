@@ -27,5 +27,5 @@ class AuthorAdmin(admin.ModelAdmin):
 
 
 @admin.register(Image)
-class PostImageAdmin(admin.ModelAdmin):
-    pass
+class MyModelAdmin(admin.ModelAdmin):
+    raw_id_fields = ('post',)

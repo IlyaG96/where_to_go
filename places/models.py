@@ -36,7 +36,7 @@ class Image(models.Model):
         Post,
         default=None,
         null=True,
-        on_delete=models.SET_NULL,
+        on_delete=models.CASCADE,
         related_name="images")
     image = models.ImageField(
         upload_to=get_file_path,
