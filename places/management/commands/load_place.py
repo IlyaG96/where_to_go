@@ -63,11 +63,10 @@ def write_to_db(place_description):
         response.raise_for_status()
         filename = get_filename_from_photo_link(link)
         path_to_file = f"./media/{title}/{filename}"
-        if not Path(path_to_file).is_file():
-            with open(file=path_to_file, mode="wb+") as file:
-                file.write(response.content)
-                image = Image(post=current_post)
-                image.image.save(filename, file)
+        with open(file=path_to_file, mode="wb+") as file:
+            file.write(response.content)
+            image = Image(post=current_post)
+            image.image.save(filename, file)
             Path(path_to_file).unlink()
     imgs = [image.image.url for image in current_post.images.all()]
     current_post.imgs = imgs
