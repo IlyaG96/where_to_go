@@ -1,10 +1,9 @@
 from django.shortcuts import render
 from places.models import Post
 from django.http import JsonResponse
-from django.shortcuts import get_object_or_404
+from django.http import HttpResponse
 
-
-def serialize_post(post):
+def serialize_content(post):
     return {
         "type": "Feature",
         "geometry": {"type": "Point",
@@ -22,14 +21,24 @@ def index_page(request):
     all_posts = Post.objects.all().only("longitude", "latitude", "title", "id")
     content = {
         "type": "FeatureCollection",
-        "features": [serialize_post(post) for post in all_posts]
+        "features": [serialize_content(post) for post in all_posts]
     }
     context = {"json": content}
     return render(request, 'index.html', context)
 
 
 def places(request, post_id):
-    current_post = get_object_or_404(Post.objects.filter(id=post_id))
+    try:
+        current_post = Post.objects.get(id=post_id)
+    except Post.DoesNotExist:
+        response = ('<html>'
+                    '<body>'
+                    'Такого места еще не существует'
+                    '<p><a href = "/">На главную</a></p>'
+                    '</body>'
+                    '</html>')
+        return HttpResponse(response)
+
     title = current_post.title
     description_short = current_post.description_short
     description_long = current_post.description_long
