@@ -33,6 +33,7 @@ INSTALLED_APPS = [
     'adminsortable2',
     "debug_toolbar",
     'tinymce',
+    'django_cleanup',
 ]
 
 MIDDLEWARE = [

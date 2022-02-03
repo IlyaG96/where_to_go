@@ -41,7 +41,7 @@ def download_image(image, title):
             file.write(response.content)
 
 
-def write_data_to_db(place_description):
+def write_to_db(place_description):
     description_short = place_description["description_short"]
     description_long = place_description["description_long"]
     longitude = place_description["coordinates"]["lng"]
@@ -63,7 +63,6 @@ def write_data_to_db(place_description):
         response.raise_for_status()
         filename = get_filename_from_photo_link(link)
         path_to_file = f"./media/{title}/{filename}"
-        print(path_to_file)
         if not Path(path_to_file).is_file():
             with open(file=path_to_file, mode="wb+") as file:
                 file.write(response.content)
@@ -92,7 +91,7 @@ class Command(BaseCommand):
 
             try:
                 place_description = open_json(path)
-                write_data_to_db(place_description)
+                write_to_db(place_description)
             except FileNotFoundError:
                 traceback.print_exc()
                 print(f'\nФайл по пути {path} не найден')
@@ -100,7 +99,7 @@ class Command(BaseCommand):
         elif url:
             try:
                 place_description = get_json(url)
-                write_data_to_db(place_description)
+                write_to_db(place_description)
             except Exception as exception:
                 print(f'{exception}\n'
                       f'Не удалось загрузить json с указанного адреса')
