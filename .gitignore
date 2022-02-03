@@ -7,3 +7,8 @@ media
 bb.txt
 /places/migrations/*
 /static/places/*
+static/admin
+static/adminsortable2
+static/django_tinymce
+static/tinymce
+static/debug_toolbar
