@@ -17,7 +17,7 @@ def get_json(url):
 
 
 def open_json(path):
-    with open(file=path, mode="r") as file:
+    with open(file=path, mode='r') as file:
         description = json.load(file)
         return description
 
@@ -35,21 +35,21 @@ def download_image(image, title):
     response = requests.get(image)
     response.raise_for_status()
     filename = get_filename_from_photo_link(image)
-    path_to_file = f"./media/{title}/{filename}"
+    path_to_file = f'./media/{title}/{filename}'
     if not Path(path_to_file).is_file():
         with open(file=path_to_file, mode="wb") as file:
             file.write(response.content)
 
 
 def write_to_db(place_description):
-    description_short = place_description["description_short"]
-    description_long = place_description["description_long"]
-    longitude = place_description["coordinates"]["lng"]
-    latitude = place_description["coordinates"]["lat"]
-    images_links_from_json = place_description["imgs"]
-    title = place_description["title"]
+    description_short = place_description['description_short']
+    description_long = place_description['description_long']
+    longitude = place_description['coordinates']['lng']
+    latitude = place_description['coordinates']['lat']
+    images_links_from_json = place_description['imgs']
+    title = place_description['title'].strip('"')
 
-    Path(f"./media/{title}").mkdir(parents=True, exist_ok=True)
+    Path(f'./media/{title}').mkdir(parents=True, exist_ok=True)
 
     current_post, created = (Post.objects.
                              get_or_create(title=title,
@@ -62,7 +62,7 @@ def write_to_db(place_description):
         response = requests.get(link)
         response.raise_for_status()
         filename = get_filename_from_photo_link(link)
-        path_to_file = f"./media/{title}/{filename}"
+        path_to_file = f'./media/{title}/{filename}'
         with open(file=path_to_file, mode="wb+") as file:
             file.write(response.content)
             image = Image(post=current_post)
