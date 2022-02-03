@@ -47,7 +47,8 @@ def write_to_db(place_description):
     longitude = place_description['coordinates']['lng']
     latitude = place_description['coordinates']['lat']
     images_links_from_json = place_description['imgs']
-    title = place_description['title'].strip('"')
+    title = place_description['title']
+    print(title)
 
     Path(f'./media/{title}').mkdir(parents=True, exist_ok=True)
 
