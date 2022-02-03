@@ -53,4 +53,4 @@ class Image(models.Model):
         verbose_name_plural = "Все изображения"
 
     def __str__(self):
-        return f"{self.position}, {self.post.title}"
+        return f"фотография {self.post.title}"
