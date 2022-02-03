@@ -42,7 +42,6 @@ def download_image(image, title):
 
 
 def write_data_to_db(place_description):
-
     description_short = place_description["description_short"]
     description_long = place_description["description_long"]
     longitude = place_description["coordinates"]["lng"]
@@ -52,24 +51,24 @@ def write_data_to_db(place_description):
 
     Path(f"./media/{title}").mkdir(parents=True, exist_ok=True)
 
-    Post.objects.get_or_create(title=title,
-                               description_long=description_long,
-                               description_short=description_short,
-                               longitude=longitude,
-                               latitude=latitude
-                               )
-
-    current_post = Post.objects.get(title=title)
-    for image in images_links_from_json:
-        response = requests.get(image)
+    current_post, created = (Post.objects.
+                             get_or_create(title=title,
+                                           description_long=description_long,
+                                           description_short=description_short,
+                                           longitude=longitude,
+                                           latitude=latitude
+                                           ))
+    for link in images_links_from_json:
+        response = requests.get(link)
         response.raise_for_status()
-        filename = get_filename_from_photo_link(image)
+        filename = get_filename_from_photo_link(link)
         path_to_file = f"./media/{title}/{filename}"
+        print(path_to_file)
         if not Path(path_to_file).is_file():
             with open(file=path_to_file, mode="wb+") as file:
                 file.write(response.content)
-                images = Image(post=current_post)
-                images.image.save(filename, file, save=True)
+                image = Image(post=current_post)
+                image.image.save(filename, file)
             Path(path_to_file).unlink()
     imgs = [image.image.url for image in current_post.images.all()]
     current_post.imgs = imgs

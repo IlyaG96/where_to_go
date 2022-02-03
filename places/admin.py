@@ -12,11 +12,13 @@ class PostImageAdmin(SortableInlineAdminMixin, admin.StackedInline):
     readonly_fields = "image_preview",
 
     def image_preview(self, image):
-        return format_html(f'<img src="{image.image.url}" width="150"')
+        return format_html(f"<img src='{image.image.url}' width='150'")
 
 
 @admin.register(Post)
 class AuthorAdmin(admin.ModelAdmin):
+
+    search_fields = ['title']
 
     inlines = [
         PostImageAdmin
