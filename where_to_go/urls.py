@@ -20,6 +20,8 @@ from django.conf.urls.static import static
 from places.views import index_page
 from places.views import places
 from django.urls import include
+from django.views.static import serve
+from django.urls import path, re_path
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -28,3 +30,5 @@ urlpatterns = [
     path('__debug__/', include('debug_toolbar.urls')),
     path('tinymce/', include('tinymce.urls'))
               ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+urlpatterns += [re_path(r'^media/(?P<path>.*)$', serve, {'document_root': settings.MEDIA_ROOT,}),]
+
