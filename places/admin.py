@@ -1,7 +1,6 @@
 from django.contrib import admin
 from .models import Post
 from .models import Image
-# Register your models here.
 from django.utils.html import format_html
 from adminsortable2.admin import SortableInlineAdminMixin
 

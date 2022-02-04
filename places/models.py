@@ -24,8 +24,8 @@ class Post(models.Model):
         verbose_name="Долгота")
 
     class Meta:
-        verbose_name = "Место"
-        verbose_name_plural = "Все места"
+        verbose_name = "Точка на карте"
+        verbose_name_plural = "Все точки на карте"
 
     def __str__(self):
         return self.title

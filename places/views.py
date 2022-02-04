@@ -3,6 +3,7 @@ from places.models import Post
 from django.http import JsonResponse
 from django.http import HttpResponse
 
+
 def serialize_content(post):
     return {
         "type": "Feature",

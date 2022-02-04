@@ -15,7 +15,6 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.conf import settings
-from django.urls import path
 from django.conf.urls.static import static
 from places.views import index_page
 from places.views import places
@@ -30,5 +29,4 @@ urlpatterns = [
     path('__debug__/', include('debug_toolbar.urls')),
     path('tinymce/', include('tinymce.urls'))
               ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-urlpatterns += [re_path(r'^media/(?P<path>.*)$', serve, {'document_root': settings.MEDIA_ROOT,}),]
-
+urlpatterns += [re_path(r'^media/(?P<path>.*)$', serve, {'document_root': settings.MEDIA_ROOT, }), ]
