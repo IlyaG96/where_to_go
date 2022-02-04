@@ -82,9 +82,13 @@ python manage.py load_place -p 'full/path/to/your_file.json'
 
 ### Добавить администратора
 <details>
+
 <summary>Добавить администратора</summary>
-Войдите в админ-панель от имени суперпользователя, слева на панели "Пользователи и группы" около кнопки "пользователь" нажмите "добавить".
-После того, как пользователь буде создан, не забудьте дать ему парава для добавления новых точек на карту. Пример ниже:
+
+Войдите в админ-панель от имени суперпользователя.  
+Слева на панели "Пользователи и группы", около кнопки "пользователь", нажмите "добавить".    
+После того, как пользователь будет создан, не забудьте дать ему права для добавления новых точек на карту.   
+Пример:  
 
 ![](https://downloader.disk.yandex.ru/preview/44aaf98f5b6bcb6fc5c0093bea45cd0c069cec95071d7e8d4dd2d79182e218fd/61fd1655/fkn8lihf7uOgXlJMEejJWLfZfz7HTIqaw6zRp7V63sDCRlsrvtbZbR9fXckAQvYG04JB5NR5759RjgqKYRjB4Q%3D%3D?uid=0&filename=%D0%A1%D0%BD%D0%B8%D0%BC%D0%BE%D0%BA%20%D1%8D%D0%BA%D1%80%D0%B0%D0%BD%D0%B0%202022-02-04%20%D0%B2%2019.02.48.png&disposition=inline&hash=&limit=0&content_type=image%2Fpng&owner_uid=0&tknv=v2&size=512x512)
 </details>
