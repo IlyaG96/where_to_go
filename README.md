@@ -40,9 +40,9 @@ SECRET_KEY=paste_your_key_here
 DEBUG=True
 ALLOWED_HOSTS=127.0.0.1
 ```
-SECRET_KEY - секретный ключ проекта Django  
-DEBUG - режим отладки (стандартно- True)  
-ALLOWED_HOSTS - ip адрес вашего сервера. По умолчанию: 127.0.0.1  
+SECRET_KEY - секретный ключ проекта Django.  
+DEBUG - режим отладки (стандартно- True).  
+ALLOWED_HOSTS - ip адрес вашего сервера. По умолчанию: 127.0.0.1.  
 
 - Создайте базу данных командой:
 ```shell
@@ -69,10 +69,13 @@ python manage.py load_place -u 'https://raw.githubusercontent.com/devmanorg/wher
 ```shell
 python manage.py load_place -p 'full/path/to/your_file.json'
 ```
+
+В процессе загрузки вы увидите сообщение в консоль с названием места, которое только что появилось на карте.
+
 Больше данных для заполнения сайта [здесь](https://github.com/devmanorg/where-to-go-places).  
 
 Тестовый сайт можно посетить, если нажать [сюда](http://127.0.0.1).  
 
-Админ-панель для заполнения сайта находится [по этому адресу](http://127.0.0.1/admin/)  
+Админ-панель для заполнения сайта находится [по этому адресу](http://127.0.0.1/admin/).  
 
 </details>
