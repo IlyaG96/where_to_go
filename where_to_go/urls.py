@@ -25,7 +25,7 @@ from django.urls import path, re_path
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', index_page),
-    path('places/<int:post_id>/', places),
+    path('places/<int:point_id>/', places, name='places'),
     path('__debug__/', include('debug_toolbar.urls')),
     path('tinymce/', include('tinymce.urls'))
               ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

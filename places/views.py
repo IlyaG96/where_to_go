@@ -2,6 +2,7 @@ from django.shortcuts import render
 from places.models import Point
 from django.http import JsonResponse
 from django.http import HttpResponse
+from django.urls import reverse, reverse_lazy
 
 
 def serialize_content(point):
@@ -13,7 +14,7 @@ def serialize_content(point):
         "properties": {
             "title": point.title,
             "placeId": point.id,
-            "detailsUrl": f"places/{point.id}"
+            "detailsUrl": reverse_lazy('places', args=[point.id])
         }
     }
 
@@ -28,9 +29,9 @@ def index_page(request):
     return render(request, 'index.html', context)
 
 
-def places(request, post_id):
+def places(request, point_id):
     try:
-        current_point = Point.objects.get(id=post_id)
+        current_point = Point.objects.get(id=point_id)
     except Point.DoesNotExist:
         response = ('<html>'
                     '<body>'
