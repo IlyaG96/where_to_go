@@ -12,3 +12,4 @@ static/django_tinymce
 static/tinymce
 static/debug_toolbar
 .DS_Store
+json
