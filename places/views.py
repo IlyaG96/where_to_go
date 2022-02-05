@@ -14,7 +14,7 @@ def serialize_content(point):
         "properties": {
             "title": point.title,
             "placeId": point.id,
-            "detailsUrl": reverse_lazy('places', args=[point.id])
+            "detailsUrl": reverse_lazy("places", args=[point.id])
         }
     }
 
@@ -26,7 +26,7 @@ def index_page(request):
         "features": [serialize_content(point) for point in all_points]
     }
     context = {"content": content}
-    return render(request, 'index.html', context)
+    return render(request, "index.html", context)
 
 
 def places(request, point_id):

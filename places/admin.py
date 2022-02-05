@@ -18,7 +18,7 @@ class PointImageAdmin(SortableInlineAdminMixin, admin.StackedInline):
 
 @admin.register(Point)
 class Point(admin.ModelAdmin):
-    search_fields = ['title']
+    search_fields = ["title"]
 
     inlines = [
         PointImageAdmin
@@ -30,4 +30,4 @@ class Point(admin.ModelAdmin):
 
 @admin.register(Image)
 class Image(admin.ModelAdmin):
-    raw_id_fields = ('point',)
+    raw_id_fields = ("point",)
