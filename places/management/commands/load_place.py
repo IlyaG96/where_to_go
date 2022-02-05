@@ -16,12 +16,6 @@ def get_json(url):
     return description
 
 
-def open_json(path):
-    with open(file=path, mode='r') as file:
-        description = json.load(file)
-        return description
-
-
 def get_filename_from_photo_link(image):
     file_name_index = 1
     path_to_file = urlparse(image).path
@@ -90,7 +84,8 @@ class Command(BaseCommand):
         elif path:
 
             try:
-                place_description = open_json(path)
+                with open(file=path, mode='r') as file:
+                    place_description = json.load(file)
                 write_to_db(place_description)
             except FileNotFoundError:
                 traceback.print_exc()
