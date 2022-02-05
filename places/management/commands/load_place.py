@@ -71,30 +71,14 @@ def write_to_db(place_description):
 class Command(BaseCommand):
 
     def add_arguments(self, parser):
-        parser.add_argument('-u', '--json_url')
-        parser.add_argument('-p', '--json_path')
+        parser.add_argument('-u', '--json_url', required=True)
 
     def handle(self, *args, **options):
         url = options['json_url']
-        path = options['json_path']
 
-        if not url and not path:
-            print('Ни путь к файлу, ни url не заданы')
-
-        elif path:
-
-            try:
-                with open(file=path, mode='r') as file:
-                    place_description = json.load(file)
-                write_to_db(place_description)
-            except FileNotFoundError:
-                traceback.print_exc()
-                print(f'\nФайл по пути {path} не найден')
-
-        elif url:
-            try:
-                place_description = get_json(url)
-                write_to_db(place_description)
-            except Exception as exception:
-                print(f'{exception}\n'
-                      f'Не удалось загрузить json с указанного адреса')
+        try:
+            place_description = get_json(url)
+            write_to_db(place_description)
+        except requests.exceptions.HTTPError:
+            traceback.print_exc()
+            print('Не удалось загрузить json с указанного адреса')
