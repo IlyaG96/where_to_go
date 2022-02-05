@@ -2,7 +2,8 @@ from django.shortcuts import render
 from places.models import Point
 from django.http import JsonResponse
 from django.http import HttpResponse
-from django.urls import reverse, reverse_lazy
+from django.utils.html import format_html, mark_safe
+from django.urls import reverse_lazy
 
 
 def serialize_content(point):
@@ -33,12 +34,15 @@ def places(request, point_id):
     try:
         current_point = Point.objects.get(id=point_id)
     except Point.DoesNotExist:
-        response = ('<html>'
-                    '<body>'
-                    'Такого места еще не существует'
-                    '<p><a href = "/">На главную</a></p>'
-                    '</body>'
-                    '</html>')
+
+        content = ('<html>'
+                   '<body>'
+                   'Такого места еще не существует'
+                   '<p><a href = "/">На главную</a></p>'
+                   '</body>'
+                   '</html>')
+
+        response = format_html(mark_safe(content))
         return HttpResponse(response)
 
     title = current_point.title
