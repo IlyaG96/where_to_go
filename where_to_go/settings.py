@@ -124,6 +124,3 @@ TINYMCE_DEFAULT_CONFIG = {
                'alignright alignjustify | bullist numlist outdent indent | '
                'removeformat | help',
 }
-
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "where_to_go.settings")
-django.setup()
