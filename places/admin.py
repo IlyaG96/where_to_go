@@ -5,7 +5,7 @@ from django.utils.html import format_html, mark_safe
 from adminsortable2.admin import SortableInlineAdminMixin
 
 
-class PostImageAdmin(SortableInlineAdminMixin, admin.StackedInline):
+class PointImageAdmin(SortableInlineAdminMixin, admin.StackedInline):
     model = Image
     readonly_fields = "image_preview",
 
@@ -17,11 +17,11 @@ class PostImageAdmin(SortableInlineAdminMixin, admin.StackedInline):
 
 
 @admin.register(Point)
-class AuthorAdmin(admin.ModelAdmin):
+class Point(admin.ModelAdmin):
     search_fields = ['title']
 
     inlines = [
-        PostImageAdmin
+        PointImageAdmin
     ]
 
     class Meta:
@@ -29,5 +29,5 @@ class AuthorAdmin(admin.ModelAdmin):
 
 
 @admin.register(Image)
-class MyModelAdmin(admin.ModelAdmin):
+class Image(admin.ModelAdmin):
     raw_id_fields = ('point',)
