@@ -26,7 +26,7 @@ def index_page(request):
         "type": "FeatureCollection",
         "features": [serialize_content(point) for point in all_points]
     }
-    context = {"json": content}
+    context = {"content": content}
     return render(request, 'index.html', context)
 
 
