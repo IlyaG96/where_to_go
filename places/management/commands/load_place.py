@@ -69,8 +69,8 @@ def write_to_db(place_description):
             image = Image(point=current_point)
             image.image.save(filename, file)
             Path(path_to_file).unlink()
-    imgs = [image.image.url for image in current_point.images.all()]
-    current_point.imgs = imgs
+    images_links = [image.image.url for image in current_point.images.all()]
+    current_point.imgs = images_links
     current_point.save()
 
 

@@ -37,10 +37,10 @@ def places(request, point_id):
     description_long = current_point.description_long
     longitude = current_point.longitude
     latitude = current_point.latitude
-    images = [image.image.url for image in current_point.images.all()]
+    images_links = [image.image.url for image in current_point.images.all()]
     response_data = {
         "title": title,
-        "imgs": images,
+        "imgs": images_links,
         "description_short": description_short,
         "description_long": description_long,
         "coordinates": {
