@@ -65,10 +65,6 @@ python manage.py load_place -u 'https://raw.githubusercontent.com/devmanorg/wher
 - 'https://raw.githubusercontent.com/devmanorg/where-to-go-places/master/places/Арт-пространство%20«Бункер%20703».json'
 - 'https://raw.githubusercontent.com/devmanorg/where-to-go-places/master/places/Водопад%20Радужный.json'
 
-Можно также загружать информацию из .json файла, расположенного локально:  
-```shell
-python manage.py load_place -p 'full/path/to/your_file.json'
-```
 
 В процессе загрузки вы увидите сообщение в консоль с названием места, которое только что появилось на карте.
 
