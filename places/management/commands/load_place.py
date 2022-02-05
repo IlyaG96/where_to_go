@@ -3,7 +3,7 @@ import json
 import requests
 import traceback
 from pathlib import Path
-from places.models import Post, Image
+from places.models import Point, Image
 from urllib.parse import urlparse, unquote
 from django.core.management.base import BaseCommand
 
@@ -52,13 +52,13 @@ def write_to_db(place_description):
 
     Path(f'./media/{title}').mkdir(parents=True, exist_ok=True)
 
-    current_post, created = (Post.objects.
-                             get_or_create(title=title,
-                                           description_long=description_long,
-                                           description_short=description_short,
-                                           longitude=longitude,
-                                           latitude=latitude
-                                           ))
+    current_point, created = (Point.objects.
+                              get_or_create(title=title,
+                                            description_long=description_long,
+                                            description_short=description_short,
+                                            longitude=longitude,
+                                            latitude=latitude
+                                            ))
     for link in images_links_from_json:
         response = requests.get(link)
         response.raise_for_status()
@@ -66,12 +66,12 @@ def write_to_db(place_description):
         path_to_file = f'./media/{title}/{filename}'
         with open(file=path_to_file, mode="wb+") as file:
             file.write(response.content)
-            image = Image(post=current_post)
+            image = Image(point=current_point)
             image.image.save(filename, file)
             Path(path_to_file).unlink()
-    imgs = [image.image.url for image in current_post.images.all()]
-    current_post.imgs = imgs
-    current_post.save()
+    imgs = [image.image.url for image in current_point.images.all()]
+    current_point.imgs = imgs
+    current_point.save()
 
 
 class Command(BaseCommand):

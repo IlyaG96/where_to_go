@@ -1,28 +1,28 @@
 from django.shortcuts import render
-from places.models import Post
+from places.models import Point
 from django.http import JsonResponse
 from django.http import HttpResponse
 
 
-def serialize_content(post):
+def serialize_content(point):
     return {
         "type": "Feature",
         "geometry": {"type": "Point",
-                     "coordinates": [post.longitude, post.latitude]
+                     "coordinates": [point.longitude, point.latitude]
                      },
         "properties": {
-            "title": post.title,
-            "placeId": post.id,
-            "detailsUrl": f"places/{post.id}"
+            "title": point.title,
+            "placeId": point.id,
+            "detailsUrl": f"places/{point.id}"
         }
     }
 
 
 def index_page(request):
-    all_posts = Post.objects.all().only("longitude", "latitude", "title", "id")
+    all_points = Point.objects.all().only("longitude", "latitude", "title", "id")
     content = {
         "type": "FeatureCollection",
-        "features": [serialize_content(post) for post in all_posts]
+        "features": [serialize_content(point) for point in all_points]
     }
     context = {"json": content}
     return render(request, 'index.html', context)
@@ -30,8 +30,8 @@ def index_page(request):
 
 def places(request, post_id):
     try:
-        current_post = Post.objects.get(id=post_id)
-    except Post.DoesNotExist:
+        current_point = Point.objects.get(id=post_id)
+    except Point.DoesNotExist:
         response = ('<html>'
                     '<body>'
                     'Такого места еще не существует'
@@ -40,12 +40,12 @@ def places(request, post_id):
                     '</html>')
         return HttpResponse(response)
 
-    title = current_post.title
-    description_short = current_post.description_short
-    description_long = current_post.description_long
-    longitude = current_post.longitude
-    latitude = current_post.latitude
-    images = [image.image.url for image in current_post.images.all()]
+    title = current_point.title
+    description_short = current_point.description_short
+    description_long = current_point.description_long
+    longitude = current_point.longitude
+    latitude = current_point.latitude
+    images = [image.image.url for image in current_point.images.all()]
     response_data = {
         "title": title,
         "imgs": images,

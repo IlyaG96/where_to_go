@@ -3,21 +3,23 @@ from tinymce.models import HTMLField
 
 
 def get_file_path(instance, filename):
-    return f"media/{instance.post.title}/{filename}"
+    return f"media/{instance.point.title}/{filename}"
 
 
-class Post(models.Model):
+class Point(models.Model):
     title = models.CharField(
         max_length=256,
         verbose_name="Заголовок",
-        default="Здесь заголовок",
+        help_text="Здесь заголовок",
         unique=True)
     description_short = HTMLField(
         verbose_name="Краткое описание",
-        default="Здесь краткое описание места")
+        help_text="Здесь краткое описание места",
+        blank=True)
     description_long = HTMLField(
         verbose_name="Полное описание",
-        default="Здесь полное описание места")
+        help_text="Здесь полное описание места",
+        blank=True)
     longitude = models.FloatField(
         verbose_name="Широта")
     latitude = models.FloatField(
@@ -32,10 +34,9 @@ class Post(models.Model):
 
 
 class Image(models.Model):
-    post = models.ForeignKey(
-        Post,
+    point = models.ForeignKey(
+        Point,
         default=None,
-        null=True,
         on_delete=models.CASCADE,
         related_name="images")
     image = models.ImageField(
@@ -43,8 +44,6 @@ class Image(models.Model):
         verbose_name="Картинка")
     position = models.PositiveIntegerField(
         default=0,
-        blank=False,
-        null=False,
         verbose_name="Порядковый номер картинки")
 
     class Meta:
@@ -53,4 +52,4 @@ class Image(models.Model):
         verbose_name_plural = "Все изображения"
 
     def __str__(self):
-        return f"фотография {self.post.title}"
+        return f"фотография {self.point.title}"

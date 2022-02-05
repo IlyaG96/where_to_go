@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Post
+from .models import Point
 from .models import Image
 from django.utils.html import format_html
 from adminsortable2.admin import SortableInlineAdminMixin
@@ -14,7 +14,7 @@ class PostImageAdmin(SortableInlineAdminMixin, admin.StackedInline):
         return format_html(f"<img src='{image.image.url}' width='150'")
 
 
-@admin.register(Post)
+@admin.register(Point)
 class AuthorAdmin(admin.ModelAdmin):
 
     search_fields = ['title']
@@ -24,9 +24,9 @@ class AuthorAdmin(admin.ModelAdmin):
     ]
 
     class Meta:
-        model = Post
+        model = Point
 
 
 @admin.register(Image)
 class MyModelAdmin(admin.ModelAdmin):
-    raw_id_fields = ('post',)
+    raw_id_fields = ('point',)
