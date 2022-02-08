@@ -36,14 +36,14 @@ def create_point(place_description):
         response.raise_for_status()
         filename = get_filename_from_photo_link(link)
         path_to_file = f"./media/{title}/{filename}"
-        with open(file=path_to_file, mode="wb") as file:
+        with open(file=path_to_file, mode="wb+") as file:
             file.write(response.content)
             image = Image(point=current_point)
             image.image.save(filename, file)
             Path(path_to_file).unlink()
     images_links = [image.image.url for image in current_point.images.all()]
-    current_point.description_long = description_long,
-    current_point.description_short = description_short,
+    current_point.description_long = description_long
+    current_point.description_short = description_short
     current_point.imgs = images_links
     current_point.save()
 
