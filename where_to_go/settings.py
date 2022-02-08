@@ -31,7 +31,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'places',
     'adminsortable2',
-    'debug_toolbar',
     'tinymce',
     'django_cleanup',
 ]
@@ -44,7 +43,6 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'debug_toolbar.middleware.DebugToolbarMiddleware',
 ]
 
 ROOT_URLCONF = 'where_to_go.urls'
@@ -104,7 +102,9 @@ STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
-
+STATICFILES_DIRS = [
+    BASE_DIR / "staticfiles",
+    ]
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 INTERNAL_IPS = [
     '127.0.0.1',
