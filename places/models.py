@@ -3,7 +3,7 @@ from tinymce.models import HTMLField
 
 
 def get_file_path(instance, filename):
-    return f"media/{instance.point.title}/{filename}"
+    return f"{instance.point.title}/{filename}"
 
 
 class Point(models.Model):

@@ -31,6 +31,11 @@ def create_point(place_description):
                                             longitude=longitude,
                                             latitude=latitude
                                             ))
+
+    current_point.description_long = description_long
+    current_point.description_short = description_short
+    current_point.save()
+
     for link in images_links_from_json:
         response = requests.get(link)
         response.raise_for_status()
@@ -42,8 +47,6 @@ def create_point(place_description):
             image.image.save(filename, file)
             Path(path_to_file).unlink()
     images_links = [image.image.url for image in current_point.images.all()]
-    current_point.description_long = description_long
-    current_point.description_short = description_short
     current_point.imgs = images_links
     current_point.save()
 
