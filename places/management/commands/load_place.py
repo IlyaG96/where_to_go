@@ -7,14 +7,6 @@ from urllib.parse import urlparse, unquote
 from django.core.management.base import BaseCommand
 
 
-def get_json(url):
-    response = requests.get(url)
-    response.raise_for_status()
-    description = response.json()
-
-    return description
-
-
 def get_filename_from_photo_link(image):
     file_name_index = 1
     path_to_file = urlparse(image).path
@@ -24,16 +16,6 @@ def get_filename_from_photo_link(image):
     return file_name
 
 
-def download_image(image, title):
-    response = requests.get(image)
-    response.raise_for_status()
-    filename = get_filename_from_photo_link(image)
-    path_to_file = f"./media/{title}/{filename}"
-    if not Path(path_to_file).is_file():
-        with open(file=path_to_file, mode="wb") as file:
-            file.write(response.content)
-
-
 def write_to_db(place_description):
     description_short = place_description["description_short"]
     description_long = place_description["description_long"]
@@ -41,7 +23,6 @@ def write_to_db(place_description):
     latitude = place_description["coordinates"]["lat"]
     images_links_from_json = place_description["imgs"]
     title = place_description["title"]
-    print(title)
 
     Path(f"./media/{title}").mkdir(parents=True, exist_ok=True)
 
@@ -76,7 +57,9 @@ class Command(BaseCommand):
         url = options["json_url"]
 
         try:
-            place_description = get_json(url)
+            response = requests.get(url)
+            response.raise_for_status()
+            place_description = response.json()
             write_to_db(place_description)
         except requests.exceptions.HTTPError:
             traceback.print_exc()
