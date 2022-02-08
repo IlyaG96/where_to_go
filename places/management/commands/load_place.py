@@ -16,7 +16,7 @@ def get_filename_from_photo_link(image):
     return file_name
 
 
-def write_to_db(place_description):
+def create_point(place_description):
     description_short = place_description["description_short"]
     description_long = place_description["description_long"]
     longitude = place_description["coordinates"]["lng"]
@@ -28,22 +28,22 @@ def write_to_db(place_description):
 
     current_point, created = (Point.objects.
                               get_or_create(title=title,
-                                            description_long=description_long,
-                                            description_short=description_short,
-                                            longitude=longitude,
-                                            latitude=latitude
                                             ))
     for link in images_links_from_json:
         response = requests.get(link)
         response.raise_for_status()
         filename = get_filename_from_photo_link(link)
         path_to_file = f"./media/{title}/{filename}"
-        with open(file=path_to_file, mode="wb+") as file:
+        with open(file=path_to_file, mode="wb") as file:
             file.write(response.content)
             image = Image(point=current_point)
             image.image.save(filename, file)
             Path(path_to_file).unlink()
     images_links = [image.image.url for image in current_point.images.all()]
+    current_point.description_long = description_long,
+    current_point.description_short = description_short,
+    current_point.longitude = longitude,
+    current_point.latitude = latitude
     current_point.imgs = images_links
     current_point.save()
 
@@ -60,7 +60,7 @@ class Command(BaseCommand):
             response = requests.get(url)
             response.raise_for_status()
             place_description = response.json()
-            write_to_db(place_description)
+            create_point(place_description)
         except requests.exceptions.HTTPError:
             traceback.print_exc()
             print("Не удалось загрузить json с указанного адреса")
