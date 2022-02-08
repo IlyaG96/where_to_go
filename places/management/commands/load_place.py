@@ -28,6 +28,8 @@ def create_point(place_description):
 
     current_point, created = (Point.objects.
                               get_or_create(title=title,
+                                            longitude=longitude,
+                                            latitude=latitude
                                             ))
     for link in images_links_from_json:
         response = requests.get(link)
@@ -42,8 +44,6 @@ def create_point(place_description):
     images_links = [image.image.url for image in current_point.images.all()]
     current_point.description_long = description_long,
     current_point.description_short = description_short,
-    current_point.longitude = longitude,
-    current_point.latitude = latitude
     current_point.imgs = images_links
     current_point.save()
 
