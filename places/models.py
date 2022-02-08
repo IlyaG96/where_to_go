@@ -36,7 +36,6 @@ class Point(models.Model):
 class Image(models.Model):
     point = models.ForeignKey(
         Point,
-        default=None,
         on_delete=models.CASCADE,
         related_name="images")
     image = models.ImageField(

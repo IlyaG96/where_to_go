@@ -21,11 +21,11 @@ def serialize_content(point):
 
 def index_page(request):
     all_points = Point.objects.all().only("longitude", "latitude", "title", "id")
-    content = {
+    points_on_map = {
         "type": "FeatureCollection",
         "features": [serialize_content(point) for point in all_points]
     }
-    context = {"content": content}
+    context = {"content": points_on_map}
     return render(request, "index.html", context)
 
 
