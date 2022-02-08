@@ -103,7 +103,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 STATICFILES_DIRS = [
-    BASE_DIR / "staticfiles",
+    BASE_DIR / 'staticfiles',
     ]
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 INTERNAL_IPS = [
