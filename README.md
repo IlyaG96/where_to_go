@@ -3,7 +3,7 @@
 
 Учебный проект для курсов web-разработчиков [dvmn](https://dvmn.org).  
 Cайт можно посетить, если нажать [сюда](http://137.184.45.165).
-Админ-панель для заполнения сайта находится [по этому адресу](http://137.184.45.165/admin/)
+Админ-панель для заполнения сайта находится [по этому адресу](http://137.184.45.165/admin/).
 
 
 ## Установка
@@ -64,9 +64,6 @@ python manage.py load_place -u 'https://raw.githubusercontent.com/devmanorg/wher
 - 'https://raw.githubusercontent.com/devmanorg/where-to-go-places/master/places/Антикафе%20Bizone.json'
 - 'https://raw.githubusercontent.com/devmanorg/where-to-go-places/master/places/Арт-пространство%20«Бункер%20703».json'
 - 'https://raw.githubusercontent.com/devmanorg/where-to-go-places/master/places/Водопад%20Радужный.json'
-
-
-В процессе загрузки вы увидите сообщение в консоль с названием места, которое только что появилось на карте.
 
 Больше данных для заполнения сайта [здесь](https://github.com/devmanorg/where-to-go-places).  
 
