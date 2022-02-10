@@ -21,9 +21,9 @@ class Point(models.Model):
         help_text="Здесь полное описание места",
         blank=True)
     longitude = models.FloatField(
-        verbose_name="Широта")
-    latitude = models.FloatField(
         verbose_name="Долгота")
+    latitude = models.FloatField(
+        verbose_name="Широта")
 
     class Meta:
         verbose_name = "Точка на карте"
