@@ -26,15 +26,15 @@ def create_point(place_description):
 
     Path(f"./media/{title}").mkdir(parents=True, exist_ok=True)
 
-    current_point, created = (Point.objects.
-                              get_or_create(title=title,
-                                            longitude=longitude,
-                                            latitude=latitude
-                                            ))
+    updated_values = {
+        "description_short": description_short,
+        "description_long": description_long
+    }
 
-    current_point.description_long = description_long
-    current_point.description_short = description_short
-    current_point.save()
+    current_point, created = Point.objects.update_or_create(title=title,
+                                                            longitude=longitude,
+                                                            latitude=latitude,
+                                                            defaults=updated_values)
 
     for link in images_links_from_json:
         response = requests.get(link)
