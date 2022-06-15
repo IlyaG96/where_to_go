@@ -13,3 +13,4 @@ static/tinymce
 static/debug_toolbar
 .DS_Store
 json
+empydir
